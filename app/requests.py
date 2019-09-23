@@ -16,3 +16,17 @@ def get_quotes():
         random_quote = json.loads(quotes_data)
         print(random_quote)
         quotes_result = []
+
+        if random_quote:
+            quote = random_quote
+            quote_item = process_results(quote)
+        return quote_item
+
+def process_results(quote_object):
+    quote_item = []
+    id = quote_object['author']
+    quote = quote_object['quote']
+
+    quote_item.append(Quote(id,author,quote))
+    print(quote_item)
+    return quote_item
