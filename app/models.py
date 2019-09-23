@@ -58,3 +58,43 @@ class Blog(db.Model):
         db.session.clear(self)
         db.session.commit()
 
+class Comment(db.Model):
+
+    __tablename__ = 'comments'
+
+
+    id = db.Column(db.Integer,primary_key = True)
+    user_id = db.Column(db.Integer,db.ForeignKey("users.id"))
+    post_id=db.Column(db.Integer, db.ForeignKey('blogs.id'))
+    post_comment = db.Column(db.Text)
+    posted = db.Column(db.DateTime,default=datetime.utcnow)
+
+
+    def save_comment(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_comment(self):
+        db.session.clear(self)
+        db.session.commit()
+
+
+@login_manager.user_loader
+def load_user(username):
+    return User.query.get(int(username))
+
+
+class Quote:
+
+
+    def __init__(self,id,author,quote):
+        self.id=id
+        self.author=author
+        self.quote=quote
+
+class Subscribers(db.Model):
+
+    __tablename__ = 'subs'
+
+    id = db.Column(db.Integer,primary_key = True)
+    email = db.Column(db.Text) 
