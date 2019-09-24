@@ -7,7 +7,6 @@ class Config:
     QUOTE_API_BASE_URL = os.environ.get('QUOTE_API_BASE_URL')
     MAIL_FIRSTNAME = os.environ.get("MAIL_FIRSTNAME")
     MAIL_PASSWORD = os.environ.get("MAIL_PASSWORD")
-    SQLALCHEMY_DATABASE_URI = 'postgresql+psycopg2://hapiness:chapati@localhost:5432/blog'
     UPLOADED_PHOTOS_DEST = 'app/static/photos'
     DEBUG = True
 
