@@ -5,14 +5,16 @@ from .forms import RegistrationForm,LoginForm
 from .. import db
 from flask_login import login_user,logout_user,login_required,current_user
 
-@auth.route('/login',methods=['GET','POST'])
+
+
+@auth.route('/login', methods=['GET','POST'])
 def login():
     login_form = LoginForm()
     if login_form.validate_on_submit():
         user = User.query.filter_by(email = login_form.email.data).first()
         if user is not None and user.verify_password(login_form.password.data):
             login_user(user,login_form.remember.data)
-            return redirect(request.args.get('next')) or url_for('main.profile',uname=current_user.firstname))
+            return redirect(request.args.get('next')) or url_for('main.profile',fname=current_user.firstname)
 
         flash('Invalid firstname or Password')
 
@@ -25,11 +27,11 @@ def logout():
     logout_user()
     return redirect(url_for("main.index"))
 
-@auth.route('/register',methods = ["GET","POST"])
+@auth.route('/register', methods = ["GET","POST"])
 def register():
     form = RegistrationForm()
     if form.validate_on_submit():
-        user = User(email = from.email.data, firstname = form.firstname.data,password = form.password.data)
+        user = User(email = form.email.data, firstname = form.firstname.data,password = form.password.data)
         db.session.add(user)
         db.session.commit()
 

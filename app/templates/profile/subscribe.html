@@ -1,0 +1,24 @@
+{% extends 'base.html'%}
+{% import 'bootstrap/wtf.html' as wtf%}
+
+{%  block content  %}
+<body style="background-color: 	#F8F8FF">
+<div style="margin-top:80px;background-color:white" class="container">
+<div class="col-md-3"></div>
+<div class="col-md-6">
+    <h3 class="text-center"><strong>Subscribe </strong></h3>
+    <p style="border:1px solid #F8F8FF;padding:10px;font-size:17px;">Subscribe to The blog to be 
+        getting alerts when a new blog is posted, 
+        you can sign up the subscription
+        by filling in the form below and enjoy free updates on 
+        whats trending 
+    </p>
+    <br><br>
+     {{wtf.quick_form(subscribe_form)}}
+     <br><br>
+</div>
+</div>
+<div class="col-md-3"></div>
+<hr>
+</body>
+{%endblock%} 

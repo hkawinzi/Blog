@@ -5,21 +5,19 @@ import markdown2
 from . import main
 from ..models import User,Blog,Comment,Quote,Subscribers
 from .forms import UpdateProfile,PostBlog,PostCommentForm,SubscribeForm
-from ..requests import get_quotes
+from ..requests import getQuotes
 from ..email import mail_message
 
 
-@main.route('/')
-def index():
 
+@main.route('/',methods=['GET','POST'])
+def index():
+    quotes = getQuotes()
     title='Blog'
     blogs=Blog.query.all()
+    return render_template('index.html',title='Blog',blogs=blogs, quotes=quotes)
 
-    random_quotes = get_quotes()
-
-    return render_template('index.html',title=title,blogs=blogs,quotes=random_quotes)
-
-#User profile 
+# User profile 
 
 @main.route('/user/<fname>',methods=['GET','POST'])
 def profile(fname):
@@ -29,6 +27,8 @@ def profile(fname):
 
 
     return render_template("profile/profile.html", user = user,blogs=blogs)
+
+
 
 @main.route('/user/<fname>/update/',methods = ['GET','POST'])
 @login_required
@@ -47,6 +47,8 @@ def update_profile(fname):
         return redirect(url_for('main.profile',fname=user.firstname))
 
     return render_template('profile/update.html',form =form,user=user)
+
+
 
 @main.route('/user/<fname>/update/pic',methods= ['POST'])
 @login_required
@@ -127,7 +129,7 @@ def subscribe():
         subscribers = Subscribers.query.all()
 
         return redirect(url_for('main.index'))
-    return render_template('subscribe.html',subscribe_form=form)
+    return render_template('profile/subscribe.html',subscribe_form=form)
 
 
 @main.route('/delete/<int:id>',methods=["GET","POST"])
